@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\InvalidRequestException;
 use App\Models\Category;
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\OrderItem;
@@ -61,6 +62,8 @@ class ProductsController extends Controller
 
         $products = $builder->paginate(16);
 
+        $categoryService = app(CategoryService::class)->getCategoryTree();
+
         return view('products.index', [
             'products' => $products,
             'filters'  => [
@@ -69,6 +72,8 @@ class ProductsController extends Controller
             ],
             // 等价于 isset($category) ? $category : null
             'category' => $category ?? null,
+            // 将类目树传递给模板文件
+            'categoryTree' => $categoryService,
         ]);
     }
 
