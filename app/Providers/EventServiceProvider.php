@@ -3,14 +3,16 @@
 namespace App\Providers;
 
 use App\Events\OrderReviewd;
+use App\Events\OrderShipped;
+use App\Listeners\SendOrderNotification;
 use App\Listeners\UpdateProductRating;
 use App\Events\OrderPaid;
 use App\Listeners\UpdateProductSoldCount;
 use App\Listeners\SendOrderPaidMail;
 use App\Listeners\RegisteredListener;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -30,6 +32,9 @@ class EventServiceProvider extends ServiceProvider
         OrderReviewd::class => [
             UpdateProductRating::class,
         ],
+        OrderShipped::class => [
+            SendOrderNotification::class,
+        ]
     ];
 
     /**
@@ -40,7 +45,5 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
-        //
     }
 }

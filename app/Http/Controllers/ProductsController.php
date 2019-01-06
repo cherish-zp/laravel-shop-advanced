@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderShipped;
 use App\Exceptions\InvalidRequestException;
 use App\Models\Category;
+use App\Models\Order;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -13,6 +15,22 @@ class ProductsController extends Controller
 {
     public function index(Request $request)
     {
+      /*  $order = new Order();
+        $order->id = 1;
+        event(new OrderShipped($order));*/
+
+      //echo file_get_contents('https://laravel-china.org/courses/ecommerce-advance/5.5/database-structure-design/2047');
+
+     /* $callback = function ($all) {
+          return 5 * $all;
+      };
+      $re = with(5,$callback);
+      echo $re;
+
+        exit;*/
+
+
+
         // 创建一个查询构造器
         $builder = Product::query()->where('on_sale', true);
         // 判断是否有提交 search 参数，如果有就赋值给 $search 变量
